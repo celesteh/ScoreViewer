@@ -264,7 +264,7 @@ void setup() {
   */
     frame.setAlwaysOnTop(true); 
   //order = new Pieces( new String[] {"tacet.xml", "bron.xml", "tacet.xml", "zucker.xml", "tacet.xml", "ashley.xml", "tacet.xml"});
-  order = new Pieces( new String[] {"tacet.xml", "birdcall.xml", "tacet.xml", "oates1.xml", "tacet.xml", "oates2.xml", "tacet.xml" });
+  order = new Pieces( new String[] {"willowbrook.xml", "kuivila2.xml", "tacet.xml", "rock.xml", "tacet.xml", "bruce.xml", "tacet.xml", "birdcall.xml", "tacet.xml", "oates1.xml", "tacet.xml", "oates2.xml", "tacet.xml" });
   advance();
 }
 

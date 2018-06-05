@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>City of No Allusions</title>
+    <start>0</start>
+    <end>580</end>
+    <type>minutes</type>
+    <id>kuivila</id>
+    <timing start="0" end="480" bgcolour="black" fgcolour="white">Main Section</timing>
+    <timing start="481" end="580" bgcolor="red" fgcolour="black">End</timing>
+</piece>

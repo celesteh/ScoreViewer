@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Nature Study Notes</title>
+    <start>0</start>
+    <end>3600</end>
+    <type>minutes</type>
+    <id>nsn</id>
+    <timing start="0" end="540" bgcolour="black" fgcolour="white">Start</timing>
+    <timing start="540" end="600" bgcolour="green" fgcolour="black">128</timing>
+    <timing start="600" end="960" bgcolour="black" fgcolour="white">Main Section</timing>
+    <timing start="960" end="980" bgcolour="green" fgcolour="black">18</timing>
+    <timing start="980" end="1500" bgcolour="black" fgcolour="white">Main</timing>
+    <timing start="1500" end="1520" bgcolour="green" fgcolour="black">34</timing>
+    <timing start="1520" end="1720" bgcolour="black" fgcolour="white">Main</timing>
+    <timing start="1720" end="1740" bgcolour="green" fgcolour="black">145</timing>
+    <timing start="1740" end="2160" bgcolour="black" fgcolour="white">Main</timing>
+    <timing start="2160" end="2180" bgcolour="green" fgcolour="black">68</timing>
+    <timing start="2180" end="2400" bgcolour="black" fgcolour="white">Main</timing>
+    <timing start="2400" end="2420" bgcolour="green" fgcolour="black">47</timing>
+    <timing start="2420" end="2880" bgcolour="black" fgcolour="white">Main</timing>
+    <timing start="2880" end="2900" bgcolour="green" fgcolour="black">129</timing>
+    <timing start="2900" end="3240" bgcolour="black" fgcolour="white">Main Section</timing>
+    <timing start="3240" end="3420" bgcolor="red" fgcolour="black">35</timing>
+    <timing start="3420" end="3600" bgcolour="black" fgcolour="white">Main Section</timing>
+</piece>

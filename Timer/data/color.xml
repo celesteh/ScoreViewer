@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Schaeffer</title>
+    <start>0</start>
+    <end>360</end>
+    <type>minutes</type>
+    <timing start="0" end="120"  bgcolor="purple" fgcolor="black" page="1">Section 1</timing>
+    <timing start="121" end="240" bgcolor="yellow" fgcolor="black" page="2">Section 2</timing>
+    <timing start="241" end="300" bgcolor="black" fgcolor="white" page="3">Section 3</timing>
+    <timing start="301" end="360" bgcolor="red" fgcolor="black" page="4">Section 4</timing>
+</piece>
+
+

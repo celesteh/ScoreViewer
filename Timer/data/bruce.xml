@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Paulines Proverbs</title>
+    <start>0</start>
+    <end>160</end>
+    <type sections_start_with_zero="0" countdown="0">minutes</type>
+    <id>bruce</id>
+<timing start="0" end="39" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="40" end="79" bgcolour="white" fgcolour="black">Piece</timing>
+    <timing start="80" end="119" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="120" end="149" bgcolour="white" fgcolour="black">Piece</timing>
+    <timing start="150" end="160" bgcolour="red" fgcolour="black">End</timing>
+</piece>

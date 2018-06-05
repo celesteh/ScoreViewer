@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Thank You</title>
+    <start>0</start>
+    <end>125</end>
+    <type sections_start_with_zero="1" countdown="0">minutes</type>
+    <id>williams</id>
+    <timing start="0" end="119" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="120" end="125" bgcolour="red" fgcolour="black">End</timing>
+</piece>

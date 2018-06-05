@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Unscored I</title>
+    <start>0</start>
+    <end>485</end>
+    <type sections_start_with_zero="1" countdown="1">minutes</type>
+    <id>zucker</id>
+    <timing start="0" end="480" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="481" end="485" bgcolour="red" fgcolour="black">End</timing>
+</piece>

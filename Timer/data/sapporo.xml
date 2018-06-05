@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Sapporo</title>
+    <start>0</start>
+    <end>305</end>
+    <type sections_start_with_zero="1" countdown="1">seconds</type>
+    <id>sapporo</id>
+    <timing start="0" end="300" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="301" end="305" bgcolour="red" fgcolour="black">End</timing>
+</piece>

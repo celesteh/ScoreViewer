@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Bron</title>
+    <start>0</start>
+    <end>310</end>
+    <type sections_start_with_zero="1" countdown="1" countby="15">minutes</type>
+    <id>zucker</id>
+    <timing start="0" end="300" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="301" end="310" bgcolour="red" fgcolour="black">End</timing>
+</piece>

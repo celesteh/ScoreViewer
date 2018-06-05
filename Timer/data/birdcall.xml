@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Birdcall</title>
+    <start>0</start>
+    <end>430</end>
+    <type sections_start_with_zero="0" countdown="0">minutes</type>
+    <id>schenker</id>
+    <timing start="0" end="89" bgcolor="black" fgcolor="yellow">I</timing>
+    <timing start="90" end="209" bgcolour="black" fgcolour="white">II</timing>
+    <timing start="210" end="284" bgcolour="black" fgcolour="red">III</timing>
+    <timing start="285" end="369" bgcolour="black" fgcolour="blue">IV</timing> 
+    <timing start="370" end="389" bgcolour="black" fgcolour="green">V</timing>
+    <timing start="390" end="420" bgcolour="black" fgcolour="white">VI</timing>
+    <timing start="421" end="430" bgcolour="red" fgcolour="black">VI</timing>
+
+
+</piece>

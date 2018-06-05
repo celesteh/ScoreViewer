@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Lullaby for Daisy Pauline</title>
+    <start>0</start>
+    <end>180</end>
+    <type sections_start_with_zero="1">seconds</type>
+    <id>oliveros</id>
+    <timing start="0" end="29" bgcolour="blue" fgcolour="black">Pleasure</timing>
+    <timing start="30" end="89" bgcolor="green" fgcolour="black">Yourself</timing>
+    <timing start="90" end="179" bgcolor="yellow" fgcolour="black">Drone</timing>
+    <timing start="180" end="169" bgcolor="orange" fgcolour="black">Mumum</timing>
+    <timing start="170" end="180" bgcolour="red" fgcolour="black">End</timing>
+</piece>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Between A Thought An An Action</title>
+    <start>60</start>
+    <end>480</end>
+    <type>minutes</type>
+    <timing start="60" end="119"  bgcolor="purple" fgcolor="black" page="1">Page 1</timing>
+    <timing start="120" end="179" bgcolor="yellow" fgcolor="black" page="2" speed="900">Page 2</timing>
+    <timing start="180" end="199" bgcolor="periwinkle" fgcolor="black" page="3">Men</timing>
+    <timing start="200" end="219" bgcolor="black" fgcolor="white" page="3">Between</timing>
+    <timing start="220" end="229" bgcolor="pink" fgcolor="black" page="3">Women</timing>
+    <timing start="230" end="239" bgcolor="black" fgcolor="white" page="3">Last</timing>
+    <timing start="240" end="299" bgcolor="orange" fgcolor="black" page="4">Page 4</timing>
+    <timing start="300" end="359" bgcolor="green" fgcolor="black" page="5">Page 5</timing>
+    <timing start="360" end="384" bgcolor="black" fgcolor="white" page="6">Page 6</timing>
+    <timing start="385" end="414" bgcolor="periwinkle" fgcolor="black" page="6">Men Again</timing>
+    <timing start="415" end="419" bgcolor="black" fgcolor="white" page="6">End of 6</timing>
+    <timing start="420" end="474" bgcolor="yellow" fgcolor="black" page="7">Page 7</timing>
+    <timing start="475" end="479" bgcolor="orange" fgcolor="black" page="7">Last 5</timing>
+    <timing start="480" end="482" bgcolor="red" fgcolour="black">End</timing>
+</piece>

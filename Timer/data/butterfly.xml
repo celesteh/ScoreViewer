@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Bye Bye Butterfly</title>
+    <start>0</start>
+    <end>370</end>
+    <type sections_start_with_zero="1" countdown="0" countby="0">minutes</type>
+    <id>butterfly</id>
+    <timing start="0" end="359" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="360" end="370" bgcolour="red" fgcolour="black">End</timing>
+</piece>

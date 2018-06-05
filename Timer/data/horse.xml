@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Windhorse</title>
+    <start>0</start>
+    <end>250</end>
+    <type sections_start_with_zero="1" countdown="1">seconds</type>
+    <id>oliveros</id>
+    <timing start="0" end="240" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="241" end="250" bgcolour="red" fgcolour="black">End</timing>
+</piece>

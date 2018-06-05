@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Twelve Sounds Heard</title>
+    <start>0</start>
+    <end>95</end>
+    <type sections_start_with_zero="1" countdown="0">minutes</type>
+    <id>kuivila</id>
+    <timing start="0" end="89" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="90" end="95" bgcolour="red" fgcolour="black">End</timing>
+</piece>

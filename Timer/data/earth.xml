@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<piece>
+    <title>In Consideration of the Earth</title>
+    <start>0</start>
+    <end>250</end>
+    <type sections_start_with_zero="1" countdown="1" countby="0">minutes</type>
+    <id>earth</id>
+    <timing start="0" end="239" bgcolour="black" fgcolour="white">Piece</timing>
+    <timing start="240" end="250" bgcolour="red" fgcolour="black">End</timing>
+</piece>

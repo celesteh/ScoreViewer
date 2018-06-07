@@ -2,9 +2,9 @@
 <piece>
     <title>12 Sounds Heard</title>
     <start>0</start>
-    <end>135</end>
+    <end>120</end>
     <type>minutes</type>
     <id>12sounds</id>
-    <timing start="0" end="120" bgcolour="black" fgcolour="white">Main Section</timing>
-    <timing start="121" end="135" bgcolor="red" fgcolour="black">End</timing>
+    <timing start="0" end="105" bgcolour="black" fgcolour="white">Main Section</timing>
+    <timing start="106" end="120" bgcolor="red" fgcolour="black">End</timing>
 </piece>

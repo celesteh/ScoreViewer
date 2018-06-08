@@ -58,6 +58,28 @@ public class Pieces implements Iterator {
   
   public void remove() {}
   
+  public Object id(String id){
+    TimingReader times = null;
+    Boolean found = false;
+    int localIndex = index;
+    
+    while ((! found) && this.hasNext()) {
+      times = (TimingReader) this.next();
+      found = (times.id  == id);
+    }
+    
+    // restart from the start
+    index = 0;
+    while ((! found) && (index <= localIndex) && this.hasNext()) {
+      times = (TimingReader) this.next();
+      found = (times.id  == id);
+    }
+    
+    index = localIndex;
+      
+    return (Object) times;
+  }
+  
   public Object next() {
     
     TimingReader times;

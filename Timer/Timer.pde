@@ -104,7 +104,8 @@ void setup() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Next message received!");
         try {
-         //advance();        try{ 
+         advance();        
+         //try{ 
           OSCMessage msg = new OSCMessage( "/next");
           sender.send(msg);
         //} catch (Exception e) {};
@@ -118,8 +119,8 @@ void setup() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Next message received!");
         try {
-         //prev();
-                   OSCMessage msg = new OSCMessage( "/prev");
+         prev();
+          OSCMessage msg = new OSCMessage( "/prev");
           sender.send(msg);
 
         } catch (Exception e){};
@@ -179,7 +180,9 @@ void setup() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Next message received!");
         try {
-         advance();
+          if (! master) {
+             advance();
+          }
         } catch (Exception e){};
       };
      };
@@ -189,7 +192,9 @@ void setup() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Next message received!");
         try {
-         prev();
+          if (! master) {
+             prev();
+          }
         } catch (Exception e){};
       };
      };
@@ -211,6 +216,7 @@ void setup() {
    listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
        String id;
+       if (! master) {
         try {
           running = false;
           if(order != null) {
@@ -223,6 +229,7 @@ void setup() {
 
           times = new TimingReader(id);
         } catch (Exception e){};
+       };
       };
      };
     receiver.addListener("/id", listener);
@@ -276,6 +283,8 @@ void draw() {
   long disp_time;
   //float the_time;
   color fillc;
+  
+  boolean showTitle = false;
   
   TimeElement curr;
 
@@ -351,12 +360,17 @@ void draw() {
         running = false;
         blank = true;
         if((order != null) && order.hasNext()){
-          advance(); //les
-          
+          //advance(); //les
+          // we're advancing twice sometimes, sotemporaarily removing this line
+          showTitle = true;
         }
       }
 
     } else { // display the title
+      showTitle = true;
+    };
+    
+    if (showTitle) {
       running = false;
       if (times != null) {
         float scale = 1;
@@ -468,6 +482,7 @@ void startTimer () {
       } 
       running = true;
  }
+   
 
 void advance(){
   advance(true);
@@ -573,7 +588,7 @@ private long calculateTime (int speed) {
     disp_time = (long) Math.floor(times.end); 
     blank = true; 
     running = false; 
-    //advance();
+    advance();  // go to next piece
     blank = false;
   }
   

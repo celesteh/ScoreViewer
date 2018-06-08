@@ -34,6 +34,8 @@ double piece_time;
 double real_time;
 int speed = 0;
 
+double last_ping;
+
 color cred, corange, cyellow, cgreen, cblue, cpurple, cblack, cwhite;
 
 
@@ -135,29 +137,7 @@ void setup() {
     listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Start Message received!");
-        /*
-        start_time = millis();
 
-        try {
-          set_time = (((Number) message.getArguments()[0])).floatValue();
-          if (times!= null) {
-            if (set_time < times.start){ 
-              set_time = times.start;
-            }
-          }         
-        } catch (Exception e){
-          if (times != null) {
-            set_time = times.start;
-          } else {
-            // initialise times
-            System.out.println("times is null");
-            set_time = 0;
-          }
-        };
-        running = true;
-        master = false;
-      };
-      */
       if (! master) {
        startTimer();
       }
@@ -287,6 +267,17 @@ void draw() {
   boolean showTitle = false;
   
   TimeElement curr;
+  
+  
+  // This is the wrong place to put this, but this is the looping part of the thread
+  if (millis() - last_ping > 3000) { //every 3 seconds
+    last_ping = millis();
+         try{
+           OSCMessage msg = new OSCMessage( "/alive"); //the hope is that this keeps my wifi from sleeping
+           System.out.println("alive");
+            sender.send(msg);
+          } catch (Exception e) {}  
+  }
 
   if( times != null) {
      if (times.seconds) {
@@ -398,63 +389,6 @@ void draw() {
 
 }
 
-/*
-void mouseClicked() {
-  
-  if (! running) {
-    set_time = 0;
-    String s = (String)JOptionPane.showInputDialog("Start Time");
-    
-    if (s != null) { // if they click calcel it's null
-    
-      if ((s.compareToIgnoreCase("q") == 0) || (s.compareToIgnoreCase("quit") == 0)) {
-        exit();
-      }
-    
-      try {
-        set_time = (float) Integer.parseInt(s);
-      } catch (Exception e) { set_time = times.start; }
-    
-      startTimer();
-    
-      running = true;
-      master = true;
-    
-      try {
-        Object args[] = new Object[1];
-        args[0] = set_time;
-        OSCMessage msg = new OSCMessage( "/start", args);
-        sender.send(msg); 
-        master = true;
-       } catch (Exception e) { }
-    } // else would be cancel
-  } else {
-    
-    
-    try {
-      OSCMessage msg = new OSCMessage( "/stop", null);
-      sender.send(msg); 
-    } catch (Exception e) { }
-    running = false;
-    master = false;
-
-    Object[] options = {"Stop", "Skip",
-                    "Quit"};
-    int n = JOptionPane.showOptionDialog(null,
-      "What do you want to do?",
-      "Stop",
-      JOptionPane.YES_NO_CANCEL_OPTION,
-      JOptionPane.QUESTION_MESSAGE,
-      null,     //do not use a custom Icon
-      options,  //the titles of buttons
-      options[0]); //default button title
-      
-    if (n == JOptionPane.NO_OPTION) { advance(); }
-    if (n == JOptionPane.CANCEL_OPTION) { exit(); }
-  }
-}
-
-*/
 
 void startTimer () {
   

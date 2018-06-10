@@ -92,6 +92,7 @@ void setup() {
      listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Stop message received!");
+        master = true;
         try {
          running = false;
          //master = false;
@@ -105,6 +106,7 @@ void setup() {
    listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Next message received!");
+        master = true;
         try {
          advance();        
          //try{ 
@@ -120,6 +122,7 @@ void setup() {
     listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Next message received!");
+        master = true;
         try {
          prev();
           OSCMessage msg = new OSCMessage( "/prev");

@@ -236,9 +236,11 @@ void setup() {
 
 
   //JFrame frame = new JFrame("Order of Pieces");
-    //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //frame.setContentPane((new FileListManager()));
+  //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  //  frame.setContentPane((new FileListManager()));
     //frame.add(new FileListManager());
+    //frame.setSize(260, 200);
+    //FileListManager frame = new FileListManager();
     //frame.setSize(260, 200);
     //frame.setVisible(true);
     /*
@@ -254,7 +256,8 @@ void setup() {
   */
    // frame.setAlwaysOnTop(true); 
   //order = new Pieces( new String[] {"tacet.xml", "bron.xml", "tacet.xml", "zucker.xml", "tacet.xml", "ashley.xml", "tacet.xml"});
-  order = new Pieces( new String[] {"schooltime.xml" });
+  //order = new Pieces( new String[] {"schooltime1.xml" });
+  order = new Pieces("order.xml");
   advance();
 }
 
@@ -277,7 +280,7 @@ void draw() {
     last_ping = millis();
          try{
            OSCMessage msg = new OSCMessage( "/alive"); //the hope is that this keeps my wifi from sleeping
-           System.out.println("alive");
+           //System.out.println("alive");
             sender.send(msg);
           } catch (Exception e) {}  
   }

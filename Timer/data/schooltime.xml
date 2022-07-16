@@ -6,15 +6,24 @@
     <type sections_start_with_zero="0" countdown="0" countby="0">minutes</type>
     <id>schooltime</id>
     <timing start="0" end="29"  bgcolour="black" fgcolour="white">Carolyn</timing>
-    <timing start="30" end="159"  bgcolour="black" fgcolour="white">3 12-14 7</timing>
-    <timing start="120" end = "179" bgcolour="black" fgcolour="white">p4</timing>
-    <timing start="180" end ="279" bgcolour="black" fgcolour="white">p5</timing>
-    <timing start="280" end ="329" bgcolour="black" fgcolour="white">p6</timing>
-    <timing start="330" end="419" bgcolour="black" fgcolour="white">p8</timing>
-    <timing start="420" end="479" bgcolour="black" fgcolour="white">p9</timing>
-    <timing start="480" end="539" bgcolour="black" fgcolour="white">p11</timing>
-    <timing start="540" end="584" bgcolour="black" fgcolour="white">p16</timing>
-    <timing start="585" end="599" bgcolour="black" fgcolour="white">p17</timing>
+    <timing start="30" end ="31" bgcolour="white" fgcolour="black">Change 1</timing>
+    <timing start="32" end="119"  bgcolour="black" fgcolour="white">3 12-14 7</timing>
+    <timing start="120" end ="121" bgcolour="white" fgcolour="black">Change 2</timing>
+    <timing start="122" end = "179" bgcolour="black" fgcolour="white">p4</timing>
+    <timing start="180" end ="181" bgcolour="white" fgcolour="black">Change 3</timing>
+    <timing start="182" end ="279" bgcolour="black" fgcolour="white">p5</timing>
+    <timing start="280" end ="281" bgcolour="white" fgcolour="black">Change 4</timing>
+    <timing start="282" end ="329" bgcolour="black" fgcolour="white">p6</timing>
+    <timing start="330" end ="331" bgcolour="white" fgcolour="black">Change 5</timing>
+    <timing start="332" end="419" bgcolour="black" fgcolour="white">p8</timing>
+    <timing start="420" end ="421" bgcolour="white" fgcolour="black">Change 6</timing>
+    <timing start="422" end="479" bgcolour="black" fgcolour="white">p9</timing>
+    <timing start="480" end ="481" bgcolour="white" fgcolour="black">Change 7</timing>
+    <timing start="482" end="539" bgcolour="black" fgcolour="white">p11</timing>
+    <timing start="540" end ="541" bgcolour="white" fgcolour="black">Change 8</timing>
+    <timing start="542" end="584" bgcolour="black" fgcolour="white">p16</timing>
+    <timing start="585" end ="586" bgcolour="white" fgcolour="black">Change 8</timing>
+    <timing start="587" end="599" bgcolour="black" fgcolour="white">p17</timing>
  <timing start="600" end="610" bgcolour="red" fgcolour="black">End</timing>
 </piece> 
 <!--  

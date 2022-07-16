@@ -14,6 +14,9 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.BorderLayout;
 import java.awt.event.*;
+import java.awt.Font;
+import java.awt.GraphicsConfiguration;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.*;
 import javax.swing.filechooser.*;
@@ -27,6 +30,7 @@ public class FileListManager extends JFrame {
   FileListGui gui;
   JPanel panel;
   ActionListener listener;
+  
    
   public FileListManager () {
     this ("Order of Pieces");
@@ -36,13 +40,23 @@ public class FileListManager extends JFrame {
     super (title);
     
     String [] filenames;
+    int scaleFactor = 1;
+    java.awt.Font font;
     
+  
+    final java.awt.GraphicsDevice defaultScreenDevice = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     
+    GraphicsConfiguration gc = defaultScreenDevice.getDefaultConfiguration();
+    AffineTransform at = gc.getDefaultTransform();
     
+    font = new Font("Verdana", java.awt.Font.PLAIN, 24);
+    font = font.deriveFont(at);
+     
     panel = new JPanel();
 
     gui = new FileListGui();
     model = (DefaultListModel) gui.getModel();
+    gui.setFont(font);
 
     filenames = getXMLFiles();
     
@@ -57,8 +71,11 @@ public class FileListManager extends JFrame {
     model = new DefaultListModel();
     JScrollPane pane = new JScrollPane(gui);
     JButton addButton = new JButton("+");
+    addButton.setFont(font); 
     JButton removeButton = new JButton("-");
+    removeButton.setFont(font);
     JButton okButton = new JButton("Ok");
+    okButton.setFont(font);
 
     addButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -120,7 +137,7 @@ public class FileListManager extends JFrame {
     FilenameFilter xmlFilter;
     String [] filenames;
     
-    dir = new File(dataPath("Timings/"));
+    dir = new File(dataPath(""));
     
     xmlFilter = new FilenameFilter() {
       public boolean accept(File dir, String name) {

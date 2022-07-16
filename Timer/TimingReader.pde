@@ -13,6 +13,7 @@ public class TimingReader implements Iterator {
   public boolean seconds;
   public boolean mod;
   public boolean inverse;
+  public int flash;
   public String id;
   public boolean countdown;
   public int countby;
@@ -25,7 +26,10 @@ public class TimingReader implements Iterator {
    XML [] timing_list;
    String bgcolour, fgcolour, rehearsalMark;
    int pagenum;
-       
+   boolean first;
+   int section_start, section_end, low, high;
+   int index;
+      
    xml = loadXML(filename);
    
    header = xml.getChild("title");
@@ -62,6 +66,9 @@ public class TimingReader implements Iterator {
    }
   
   countdown = false;
+  seconds = false;
+  countby =0;
+  flash = 0;
    header = xml.getChild("type");
    if (header != null) {
      seconds = (header.getContent().compareToIgnoreCase("seconds") == 0);
@@ -75,18 +82,18 @@ public class TimingReader implements Iterator {
      
      if (header.hasAttribute("countby")) {
        countby = header.getInt("countby");
-     } else {
-       countby=0;
-     }
-   } else {
-     
-     seconds = false;
+     } 
+     if (header.hasAttribute("flash")){
+       flash = header.getInt("flash");
+     } 
    }
  
    
   
     timing_list = xml.getChildren("timing");
-    timings = new TimeElement[timing_list.length];
+    timings = new TimeElement[timing_list.length * 2];
+    first = true;
+    index = 0;
     
     for(int i = 0; i < timing_list.length; i++) {
       
@@ -128,12 +135,37 @@ public class TimingReader implements Iterator {
         rehearsalMark = "";
       }
       
-      timings[i] = new TimeElement(
-        timing_list[i].getInt("start"),
-        timing_list[i].getInt("end"),
-        bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark);
-    }
-    
+      section_start = timing_list[i].getInt("start");
+      section_end = timing_list[i].getInt("end");
+      
+      low = min(section_start, section_end);
+      high = max(section_start, section_end);
+      
+      if (!first && (flash > 0)) {
+        if ((high - low) > (flash + 1)){
+          System.out.println("Making flash");
+          timings[index] = new TimeElement (
+           section_start, section_start + flash, fgcolour, bgcolour, pagenum, speed, countdown, rehearsalMark);
+          index = index + 1;
+          timings[index] = new TimeElement (
+            section_start + flash + 1, section_end, bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark);
+          index = index + 1;
+        } else {
+          timings[index] = new TimeElement(section_start, section_end,
+            bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark);
+          index = index +1;
+        }
+      } else {
+      
+        timings[index] = new TimeElement(
+          section_start,
+          section_end,
+          bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark);
+        index = index +1;
+      }// end if(!first ....
+      
+      first = false;
+    }// end for
   }
 
   public boolean hasNext() {

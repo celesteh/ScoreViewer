@@ -39,6 +39,47 @@ public class Pieces implements Iterator {
     index = 0;
     
   }
+  
+  public Pieces (String xmlFile){
+   XML xml, header;
+   XML [] piece_list;
+   
+    String id;
+    
+   xml = loadXML(xmlFile);
+   
+   
+   piece_list = xml.getChildren("piece");
+   order = new String[piece_list.length];
+   for(int i = 0; i < piece_list.length; i++) {
+     id = piece_list[i].getContent();
+     //System.out.println(id);
+     order[i] = id + ".xml";
+   }
+    
+  }
+  
+  public void saveOrder() {
+    saveOrder("order.xml");
+  }
+  
+  public void saveOrder (String filename) {
+    XML contents;
+    XML piece;
+    String id;
+    
+    contents = new XML ("order");
+    for(int i = 0; i < order.length; i++) {
+       id = order[i].replaceAll("\\.[^.]*$", ""); // strip off a trailing .xml
+       piece = contents.addChild("piece");
+       piece.setContent(id);
+       piece.setInt("num", i);
+       piece.setString("id", id);
+    }
+    
+    saveXML(contents, filename);
+    
+  }
 
   public void setOrder (String[] order) {
     

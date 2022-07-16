@@ -18,13 +18,17 @@ public class TimeElement {
 
     this.start_time = start_time;
     this.end_time = end_time;
-    this.background = parseColour(background);
-    this.foreground = parseColour(foreground);
+    try {
+      this.background = parseColour(background);
+    } catch (Exception e) { this.background = #000000; }
+    try {
+      this.foreground = parseColour(foreground);
+    } catch (Exception e) { this.foreground = #ffffff; }
     this.pageIndex = pageIndex;
     this.speed = speed;
     this.countdown = countdown;
     this.rehearsalMark = rehearsalMark;
-  }
+   }
 
   public boolean isActive (double current_time){
     
@@ -41,6 +45,8 @@ public class TimeElement {
     int low, high;
     long mapped;
     
+    low = min(start_time, end_time);
+    
     
     if (this.countdown){
       //low = min(start_time, end_time);
@@ -53,10 +59,10 @@ public class TimeElement {
     
   }
 
-  private color parseColour(String col) {
+  private color parseColour(String col) throws NumberFormatException {
     color colour;
-    if (col == null) { return #A020F0; }
-    if (col.compareToIgnoreCase("black")==0) {
+    if (col == null) { throw new NumberFormatException(); 
+    } else if (col.compareToIgnoreCase("black")==0) {
         colour = #000000;
     }else if (col.compareToIgnoreCase("white") ==0 ) {
         colour = #FFFFFF;
@@ -80,6 +86,8 @@ public class TimeElement {
       colour = Integer.parseInt(col, 16);
     }
     
+    System.out.println(col);
+    System.out.println(colour);
     return colour;
   }
     

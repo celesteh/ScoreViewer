@@ -52,7 +52,7 @@ Optional `<timing>` parameters are:
   - purple
   - pink
   - periwinkle
-* `rehearsalMakr="A"` where A is the mark
+* `rehearsalMark="A"` where A is the mark
 * `speed="1000"` Specify the number of actual miliseconds for each "second"
 
 ## Issues and future plans

@@ -150,6 +150,17 @@ public class Pieces implements Iterator {
     
   }
   
+  public Object index(Integer index){
+    TimingReader times;
+    this.index = index;
+    System.out.println("next " + order.length + " in queue.");
+    System.out.println(order[index]);
+    
+    times = new TimingReader(order[index]);
+    this.index += 1;
+    
+    return (Object) times;
+  }
   
   public void hide () {
     

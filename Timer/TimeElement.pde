@@ -9,15 +9,16 @@ public class TimeElement {
   public color foreground;
   public int pageIndex;
   public int speed;
-  public boolean countdown;
+  public boolean countdown, isCue;
   public String rehearsalMark;
 
 
   public TimeElement (int start_time, int end_time, String background, String foreground, 
-            int pageIndex, int speed, boolean countdown, String rehearsalMark) {
+            int pageIndex, int speed, boolean countdown, String rehearsalMark, boolean isCue) {
 
     this.start_time = start_time;
     this.end_time = end_time;
+    this.isCue = isCue;
     try {
       this.background = parseColour(background);
     } catch (Exception e) { this.background = #000000; }

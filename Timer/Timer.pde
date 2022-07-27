@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import java.net.*;
 import java.util.Iterator;
 import java.io.File;
+import java.util.List;
+
 // kill all clickability
 int port = 1200;
 
@@ -118,10 +120,27 @@ void setup() {
       };
      };
     receiver.addListener("/remotenext", listener);
+    
+      listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("Next message received!");
+        master = true;
+        try {
+         nextq();        
+         //try{ 
+          OSCMessage msg = new OSCMessage( "/nextq");
+          sender.send(msg);
+        //} catch (Exception e) {};
+
+        } catch (Exception e){};
+      };
+     };
+    receiver.addListener("/remotenextq", listener);
+
 
     listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
-        System.out.println("Next message received!");
+        System.out.println("Prev message received!");
         master = true;
         try {
          prev();
@@ -133,9 +152,54 @@ void setup() {
      };
     receiver.addListener("/remoteprev", listener);
 
+    listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("Prev message received!");
+        master = true;
+        try {
+         prevq();
+          OSCMessage msg = new OSCMessage( "/prevq");
+          sender.send(msg);
+
+        } catch (Exception e){};
+      };
+     };
+    receiver.addListener("/remoteprevq", listener);
+
+
+
+    listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("Index message received!");
+        Object[] args = message.getArguments();
+        Integer index = Math.round((Float) args[0]);
+        master = true;
+        try {
+         index(index);
+          OSCMessage msg = new OSCMessage( "/index", args);
+          sender.send(msg);
+
+        } catch (Exception e){};
+      };
+     };
+    receiver.addListener("/remoteindex", listener);
+
 
     // communication between display computers
-    
+ 
+        listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("Index message received!");
+        Object[] args = message.getArguments();
+        Integer index = Math.round((Float)args[0]);
+        master = true;
+        try {
+         index(index);
+        } catch (Exception e){};
+      };
+     };
+    receiver.addListener("/index", listener);
+
     
     listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
@@ -173,7 +237,7 @@ void setup() {
 
     listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
-        System.out.println("Next message received!");
+        System.out.println("Prev message received!");
         try {
           if (! master) {
              prev();
@@ -182,6 +246,30 @@ void setup() {
       };
      };
     receiver.addListener("/prev", listener);
+
+   listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("Next message received!");
+        try {
+          if (! master) {
+             nextq();
+          }
+        } catch (Exception e){};
+      };
+     };
+    receiver.addListener("/nextq", listener);
+
+    listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("Prev message received!");
+        try {
+          if (! master) {
+             prevq();
+          }
+        } catch (Exception e){};
+      };
+     };
+    receiver.addListener("/prevq", listener);
 
   
   listener = new OSCListener() {
@@ -269,10 +357,14 @@ void draw() {
   long disp_time;
   //float the_time;
   color fillc;
+  String text = " ";
+  float x, y;
   
   boolean showTitle = false;
+  boolean showMark = false;
+  boolean showTime = true;
   
-  TimeElement curr;
+  TimeElement curr = null;
   
   
   // This is the wrong place to put this, but this is the looping part of the thread
@@ -341,17 +433,41 @@ void draw() {
       
       
       if ( curr != null) {
-      
-        speed = curr.speed;
+        
+        showTime = (!curr.isCue) && (times.showtime);
+        showMark = curr.isCue || times.marks;
         fill(curr.background);
         rect(0, 0, displayWidth, displayHeight);
-        fill(curr.foreground);    
-    
-        textSize(font_point);
-        if (! blank) {
-          text(formatTime(disp_time,times.seconds, times.mod, curr), 
-            (displayWidth * 1.45)/3, displayHeight * 0.75);
+      
+        if(showTime ){
+          System.out.println("show time");
+          speed = curr.speed;
+          //fill(curr.background);
+          //rect(0, 0, displayWidth, displayHeight);
+          fill(curr.foreground);    
+          
+          if (showMark) {
+            font_point = (displayWidth /10 * 1.5);
+            x = (displayWidth * 1.45)/3;;
+            y = displayHeight * 0.85;//displayHeight - (textAscent());
+          } else {
+            x = (displayWidth * 1.45)/3;
+            y = displayHeight * 0.75;
+          }
+      
+          textSize(font_point);
+          if (! blank) {
+            text(formatTime(disp_time,times.seconds, times.mod, curr), 
+              x, y);
+          }
+        } else {
+          showMark = true;
         }
+        if (showMark) {
+          text = curr.rehearsalMark;
+          System.out.println("show mark");
+        }
+        
       } else {
         
         running = false;
@@ -360,29 +476,56 @@ void draw() {
           //advance(); //les
           // we're advancing twice sometimes, sotemporaarily removing this line
           showTitle = true;
+          text = times.title;
         }
       }
 
     } else { // display the title
       showTitle = true;
+      text = times.title;
     };
     
-    if (showTitle) {
-      running = false;
+    if (showTitle || showMark) {
+      //running = false;
       if (times != null) {
         float scale = 1;
+        int div = 1;
+        
+        if (showTime) { div = 2;};
+        font_point = (displayWidth /5 * 1.5);
+        textSize(font_point);
+        scale = displayWidth / textWidth(text);
+        textSize(font_point* scale);
     
-        fill(#000000);
-        rect(0, 0, displayWidth, displayHeight);
-        fill(#ffffff);
+        if ((!running)||(curr == null) ) {
+          fill(#000000);
+          rect(0, 0, displayWidth, displayHeight);
+          y = displayHeight * 0.8;
+        } else {
+          //fill(curr.background);
+           if (showTime && (textAscent() > (displayHeight / 2))){
+             //textSize(font_point);
+             font_point = font_point * scale;
+             scale = (displayHeight ) / (textAscent() * 2);
+             textSize(font_point* scale);   
+          }
+         y = textAscent() +1;//0;//displayHeight - (textAscent() - 1);
+        }
+        //rect(0, 0, displayWidth, displayHeight);
+        
+        if ((!running) || (curr == null) ) {
+          fill(#ffffff);
+        } else {
+          fill(curr.foreground); 
+        }
+        
+        
     
-        textSize(font_point / 2);
+        //textSize(font_point / 2);
         //if (textWidth(times.title) > displayWidth) {
-          textSize(font_point);
-          scale = displayWidth / textWidth(times.title);
-          textSize(font_point* scale);
-          text(times.title, displayWidth /2,//(displayWidth * 2/* * 1.45*/)* scale, 
-            displayHeight * 0.8);
+          
+          text(text, displayWidth /2,//(displayWidth * 2/* * 1.45*/)* scale, 
+            y);
         //}
       } else {
         //if (times != null) {
@@ -466,6 +609,47 @@ void advance (boolean forward) {
   blank = false;
 }
 
+void index(Integer index){
+  blank = true;
+  running = false;
+  
+  if ((order != null) && order.ready()) {
+    times = (TimingReader) order.index(index);
+    
+    if (times != null){
+     if (master && (times.id != null)) {
+       try {
+        Object args[] = new Object[1];
+        args[0] = times.id;
+        OSCMessage msg = new OSCMessage( "/id", args);
+        sender.send(msg); 
+        master = true;
+       } catch (Exception e) { }     
+      
+    }
+          
+     if (times.seconds) {
+            font_point = (displayWidth /3 * 1.5);
+          } else {
+            font_point = (displayWidth /5 * 1.5);
+          }    
+     //startTimer();
+  }
+  }
+  blank = false;
+}     
+
+void nextq(){advanceq(true);}
+void prevq(){advanceq(false);}
+
+void advanceq(boolean forward){
+  
+  double disp_time = calculateTime(speed);
+  disp_time = times.advance(disp_time, forward);
+  setTime(disp_time); // no fix this
+}
+  
+  
 
 void keyPressed() {
   
@@ -473,10 +657,16 @@ void keyPressed() {
   if (key == 's') { advance(); }
   if (key == 'n') { advance(); }
   if (key == 'p') { prev(); }
+  if (key == '-') { prevq(); }
+  if (key == '+') { nextq(); }
   if (key == ' ') { master =true; startTimer(); }
   
 }
 
+private void setTime(double time){
+   last_time = millis(); 
+   piece_time = time; 
+}
 
 private long calculateTime (int speed) {
   long disp_time;

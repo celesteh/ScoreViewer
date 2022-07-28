@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Opera with Objects</title>
+    <start>0</start>
+    <end>670</end>
+    <type sections_start_with_zero="0" countdown="0" countby="0" flash="1">minutes</type>
+    <id>medley</id>
+    <timing start="0" end="659"  bgcolour="black" fgcolour="white">Tutti</timing>
+    <timing start="660" end="670" bgcolour="red" fgcolour="black">End</timing>
+</piece> 
+

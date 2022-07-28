@@ -1,5 +1,14 @@
 <?xml version="1.0"?>
 <order>
     <piece num = "1" day = "friday" id = "schooltime" alt="Schooltime">schooltime</piece>
+    <piece num = "2" day = "friday" id = "half" alt="Half Rite">half</piece>
+    <piece num = "3" day = "friday" id = "nothing" alt="Nothing in Nothing">nothing</piece>
+    <piece num = "4" day = "friday" id = "living" alt="Living">living</piece>
+    <piece num = "5" day = "friday" id = "ffarrabas" alt="Ffarrabas">ffarrabas</piece>
+    <piece num = "6" day = "friday" id = "medley" alt="Medley">medley</piece>
+    <piece num = "7" day = "friday" id = "alden" alt="Alden">alden</piece>
+    <piece num = "8" day = "friday" id = "spectral" alt="Spectral">spectral</piece>
+    <piece num = "9" day = "friday" id = "lucier" alt="Lucier">lucier</piece>
+
 </order>
 

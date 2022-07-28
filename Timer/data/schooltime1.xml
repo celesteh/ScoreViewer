@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Schooltime Compositions</title>
+    <start>0</start>
+    <end>610</end>
+    <type sections_start_with_zero="0" countdown="0" countby="0" flash="1">minutes</type>
+    <id>schooltime</id>
+    <timing start="0" end="29"  bgcolour="black" fgcolour="white">Carolyn</timing>
+    <timing start="30" end="119"  bgcolour="black" fgcolour="white">3 12-14 7</timing>
+    <timing start="120" end = "179" bgcolour="black" fgcolour="white">p4</timing>
+    <timing start="180" end ="279" bgcolour="black" fgcolour="white">p5</timing>
+    <timing start="280" end ="329" bgcolour="black" fgcolour="white">p6</timing>
+    <timing start="330" end="419" bgcolour="black" fgcolour="white">p8</timing>
+    <timing start="420" end="479" bgcolour="black" fgcolour="white">p9</timing>
+    <timing start="480" end="539" bgcolour="black" fgcolour="white">p11</timing>
+    <timing start="540" end="584" bgcolour="black" fgcolour="white">p16</timing>
+    <timing start="585" end="599" bgcolour="black" fgcolour="white">p17</timing>
+ <timing start="600" end="610" bgcolour="red" fgcolour="black">End</timing>
+</piece> 
+<!--  
+The revised Cardew timeline follows:
+To begin: JA rings bell, Carolyn enters, sits on the floor in the middle of the stage, writes ‘School’ on one side of a slate and ‘Time’ on the other. She stays there as observer until pdf p5. Others enter at their appointed times and stay as long as they need.
+0:30 pdf pages 3, 12-14, and 7 (= Alison, Charles, David, Jane, Gina, Simon)
+2:00 pdf p4 (George, Max)
+3:00 pdf p5 (Carolyn, Jessica, Sue, Charles) nice Song of Pleasure (+ JA frog) 
+4:30 pdf p6 (Barbara, Becky, David, Jane)
+5:30 pdf p8 (Barbara, Alison, Carolyn, Sue)
+7:00 pdf p9 (Gina, Jessica)
+8:00 pdf p 11 (Jane), with 12-14, 15 (Charles, David, Gina, Simon) rejoining
+9:00 pdf p16 (George, Max + any others requested by them?)
+9:45 pdf p17 (Peter + others?)
+10:00 end
+-->

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Half Rite</title>
+    <start>0</start>
+    <end>61</end>
+    <type sections_start_with_zero="0" countdown="0" countby="0" flash="1" marks="1">minutes</type>
+    <id>half</id>
+    <timing start="0" end="59"  bgcolour="black" fgcolour="white">Half</timing>
+    <timing start="60" end="70" bgcolour="red" fgcolour="black">End</timing>
+</piece> 
+

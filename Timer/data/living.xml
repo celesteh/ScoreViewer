@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Living Tones with Living Sounds II</title>
+    <start>0</start>
+    <end>7:00</end>
+    <type sections_start_with_zero="0" countdown="1" countby="0" flash="0" marks="1">marks</type>
+    <id>living</id>
+    <timing start="0"  bgcolour="black" fgcolour="white">A,B,C,D</timing>
+    <timing start="2:00"   bgcolour="black" fgcolour="white" countdown="1">Voc Con 1</timing>
+    <timing start="2:30" bgcolour="black" fgcolour="white" sample="JHK_LTLS_Water Insects.wav">Voc Con 2 &amp; insects</timing>
+    <timing start="3:00"  bgcolour="black" fgcolour="white" >Listen</timing>
+    <timing start="3:40" bgcolour="black" fgcolour="white">D</timing>
+    <timing start="3:55" bgcolour="black" fgcolour="white">Pour Rice JA&amp;RH JL&amp;AC, BA&amp;PH</timing>
+    <timing start="4:40" bgcolour="black" fgcolour="white">Swirl Rice</timing>
+    <timing start="5:00" bgcolour="black" fgcolour="white">E</timing>
+    <timing start="5:30" bgcolour="black" fgcolour="white">Voc Con 2</timing>
+    <timing start="6:00" bgcolour="black" fgcolour="white" sample="JHK_LTLS_Wood Frogs.wav">Voc Con 1 &amp; Frogs</timing>
+    <timing start="6:20" bgcolour="black" fgcolour="white" >Listen</timing>
+    <timing start="6:50" end="7:00" bgcolour="red" fgcolour="black">End</timing>
+</piece> 
+

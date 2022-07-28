@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<piece>
+    <title>Spectral Madrigals</title>
+    <start>0</start>
+    <end>430</end>
+    <type sections_start_with_zero="0" countdown="0" countby="0" flash="1">minutes</type>
+    <id>medley</id>
+    <timing start="0" end="419"  bgcolour="black" fgcolour="white">Tutti</timing>
+    <timing start="420" end="430" bgcolour="red" fgcolour="black">End</timing>
+</piece> 
+

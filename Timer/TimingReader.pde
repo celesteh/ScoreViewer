@@ -33,6 +33,9 @@ public class TimingReader implements Iterator {
    int section_start, section_end, low, high, last_start, last_end;
    int index;
    int [] starts;
+   String path;
+   boolean section_countdown = false, section_showtime;
+   int section_flash;
    
    this.last = 0;
       
@@ -104,7 +107,7 @@ public class TimingReader implements Iterator {
    
   
     timing_list = xml.getChildren("timing");
-    timings = new TimeElement[timing_list.length * 2];
+    timings = new TimeElement[timing_list.length];
     starts = new int[timing_list.length];
     first = true;
     index = 0;
@@ -129,6 +132,10 @@ public class TimingReader implements Iterator {
       fgcolour = null;
       pagenum = -1;
       cue = false;
+      path = "";
+      section_countdown = countdown;
+      section_flash = flash;
+      section_showtime = showtime;
       
       if (timing_list[i].hasAttribute("bgcolour")) {
         bgcolour = timing_list[i].getString("bgcolour");
@@ -160,13 +167,36 @@ public class TimingReader implements Iterator {
       
       if (timing_list[i].hasAttribute("cue")){
         cue = (timing_list[i].getInt("cue") == 1);
+        // default to not showing time on a cue
+        section_showtime = false;
       }
+
+
+      if (timing_list[i].hasAttribute("showtime")){
+        section_showtime = (timing_list[i].getInt("showtime") == 1);
+      }
+      
+      
+      if (timing_list[i].hasAttribute("countdown")){
+        section_countdown = (timing_list[i].getInt("countdown") == 1);
+        if (section_countdown) { section_showtime = true; }
+      }
+      
+      if (timing_list[i].hasAttribute("sample")){
+        path = timing_list[i].getString("sample");
+      }
+
       
       if (timing_list[i].hasAttribute("rehearsalMark")){
         rehearsalMark = timing_list[i].getString("rehearsalMark");
       } else { 
         rehearsalMark = timing_list[i].getContent();
       }
+      
+      if (timing_list[i].hasAttribute("flash")){
+       section_flash = timing_list[i].getInt("flash");
+      } 
+
       
       section_start = starts[i];
       
@@ -191,6 +221,18 @@ public class TimingReader implements Iterator {
       low = min(section_start, section_end);
       high = max(section_start, section_end);
       
+      if (first) {
+        timings[index] = new TimeElement(
+          section_start,
+          section_end,
+          bgcolour, fgcolour, pagenum, speed, section_countdown, rehearsalMark, cue, 0, section_showtime); // first never flashes
+      } else {
+        timings[index] = new TimeElement (
+          section_start, section_end, bgcolour, fgcolour, pagenum, speed, section_countdown, rehearsalMark, cue, section_flash, section_showtime);
+      }
+      
+      index = index + 1;
+      /*
       if (!first && (flash > 0)) {
         if (((high - low) > (flash + 1)) || cue){
           System.out.println("Making flash");
@@ -200,11 +242,11 @@ public class TimingReader implements Iterator {
            section_start, section_start + flash, fgcolour, bgcolour, pagenum, speed, countdown, rehearsalMark, false);
           index = index + 1;
           timings[index] = new TimeElement (
-            section_start + flash + 1, section_end, bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark, cue);
+            section_start + flash + 1, section_end, bgcolour, fgcolour, pagenum, speed, section_countdown, rehearsalMark, cue);
           index = index + 1;
         } else {
           timings[index] = new TimeElement(section_start, section_end,
-            bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark, cue);
+            bgcolour, fgcolour, pagenum, speed, section_countdown, rehearsalMark, cue);
           index = index +1;
         }
       } else {
@@ -215,6 +257,12 @@ public class TimingReader implements Iterator {
           bgcolour, fgcolour, pagenum, speed, countdown, rehearsalMark, cue);
         index = index +1;
       }// end if(!first ....
+      */
+      
+      if(path.length() > 0){
+        // fix this to track the section start when you sort out the flashing
+        timings[index-1].setSample(path);
+      }
       
       first = false;
     }// end for
@@ -284,10 +332,18 @@ public class TimingReader implements Iterator {
     TimeElement prev, range, next;
     int index = 0;
     double new_time = 0;
+    int inc = 0;
     
-    prev = range = timings[0];
+    if(forward) {
+      inc = 1;
+    }else {
+      inc = -1;
+    }
+    
+    prev = range = timings[max(last-1, 0)];
      
-    for(int i = max(last-1, 0); (! flag) && i< timings.length; i++) { 
+     
+    for(int i = max(last, 0); (! flag) && (i< timings.length) && (i >= 0); i+=inc) { 
       
       prev = range;
       range = timings[i];
@@ -295,6 +351,10 @@ public class TimingReader implements Iterator {
         flag =   range.isActive(current_time) || range.isCue;
         index = i;
       }
+    }
+    
+    if (range == null ){
+      range = timings[0];
     }
     
     if (flag) {

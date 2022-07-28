@@ -1,4 +1,5 @@
 import processing.net.*;
+import processing.sound.*;
 //import processing.video.*;
 //import processing.oscP5.*;
 import javax.swing.JOptionPane;
@@ -7,6 +8,10 @@ import java.net.*;
 import java.util.Iterator;
 import java.io.File;
 import java.util.List;
+import http.*;
+
+SimpleHTTPServer server;
+// web support forthcoming
 
 // kill all clickability
 int port = 1200;
@@ -37,6 +42,8 @@ double real_time;
 int speed = 0;
 
 double last_ping;
+
+TimeElement previous = null;
 
 color cred, corange, cyellow, cgreen, cblue, cpurple, cblack, cwhite;
 
@@ -434,9 +441,11 @@ void draw() {
       
       if ( curr != null) {
         
-        showTime = (!curr.isCue) && (times.showtime);
+        curr.setTime(disp_time);
+        
+        showTime = curr.showtime; //(!curr.isCue) && (times.showtime);
         showMark = curr.isCue || times.marks;
-        fill(curr.background);
+        fill(curr.getBackground());
         rect(0, 0, displayWidth, displayHeight);
       
         if(showTime ){
@@ -444,7 +453,7 @@ void draw() {
           speed = curr.speed;
           //fill(curr.background);
           //rect(0, 0, displayWidth, displayHeight);
-          fill(curr.foreground);    
+          fill(curr.getForeground());    
           
           if (showMark) {
             font_point = (displayWidth /10 * 1.5);
@@ -516,7 +525,7 @@ void draw() {
         if ((!running) || (curr == null) ) {
           fill(#ffffff);
         } else {
-          fill(curr.foreground); 
+          fill(curr.getForeground()); 
         }
         
         
@@ -535,6 +544,20 @@ void draw() {
     
     }
   }
+  
+  if (master) {
+    if (curr != null){
+      if (previous != curr) {
+        if (curr.audioCue != null){
+          if (curr.audioCue.length() > 0 ) {
+            System.out.println("play sound");
+            playSound(curr.audioCue);
+          }
+        }
+      }
+    }
+  }
+  previous = curr;
 
 }
 
@@ -644,9 +667,9 @@ void prevq(){advanceq(false);}
 
 void advanceq(boolean forward){
   
-  double disp_time = calculateTime(speed);
-  disp_time = times.advance(disp_time, forward);
-  setTime(disp_time); // no fix this
+  double piece_time = getTime(speed);
+  piece_time = times.advance(piece_time, forward);
+  setTime(piece_time); // no fix this
 }
   
   
@@ -658,6 +681,7 @@ void keyPressed() {
   if (key == 'n') { advance(); }
   if (key == 'p') { prev(); }
   if (key == '-') { prevq(); }
+  if (key == '_') { prevq(); } // common mistype
   if (key == '+') { nextq(); }
   if (key == ' ') { master =true; startTimer(); }
   
@@ -668,9 +692,8 @@ private void setTime(double time){
    piece_time = time; 
 }
 
-private long calculateTime (int speed) {
-  long disp_time;
-  //float the_time;
+private long getTime(int speed){
+  //long new_time; 
   float tick;
   double elapsed;
   long multiples;
@@ -696,8 +719,47 @@ private long calculateTime (int speed) {
   tick = (float)(elapsed / speed);
   piece_time += tick;
   //println (piece_time);
+  //disp_time = (long) Math.floor(piece_time);     
+  last_time = real_time;
+  
+  return((long)piece_time);
+
+}
+
+private long calculateTime (int speed) {
+  long disp_time;
+  //float the_time;
+  //float tick;
+  //double elapsed;
+  long multiples;
+  
+  //println("calculateTime()");
+  /*
+  if (set_time < times.start) {
+      set_time = times.start;
+      last_time = set_time;
+      piece_time = times.start;
+  }
+
+ 
+  
+  real_time = millis(); 
+  elapsed =  real_time - last_time; 
+  
+  
+  if (speed < 100) { speed = 1000; } // speed is the number of miliseconds in a 'second'
+
+  // how many milliseconds since the clock started?
+  //the_time = (((float)(millis() - start_time)) / speed) +set_time;
+  tick = (float)(elapsed / speed);
+  piece_time += tick;
+  //println (piece_time);
   disp_time = (long) Math.floor(piece_time);     
   last_time = real_time;
+  */
+  
+  disp_time = (long) Math.floor(this.getTime(speed));
+  
   
   if (! master) {
     // if we're behind of the master clock, then catch up to them
@@ -729,6 +791,11 @@ private long calculateTime (int speed) {
   
 }
 
+private void playSound(String path){
+  
+  //SoundFile file = new SoundFile(this, path);
+  //file.play();
+}
 
 private String formatTime(long disp_time, boolean in_seconds, boolean mod, TimeElement curr) {
   String clockTime;

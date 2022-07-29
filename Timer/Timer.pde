@@ -177,7 +177,7 @@ void setup() {
          //try{ 
           OSCMessage msg = new OSCMessage( "/nextq");
           //sender.send(msg);
-          broadcast( msg);
+          //broadcast( msg);
         //} catch (Exception e) {};
 
         } catch (Exception e){};
@@ -208,7 +208,7 @@ void setup() {
          prevq();
           OSCMessage msg = new OSCMessage( "/prevq");
           //sender.send(msg);
-          broadcast( msg);
+          //broadcast( msg);
         } catch (Exception e){};
       };
      };
@@ -239,7 +239,7 @@ void setup() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Index message received!");
         Object[] args = message.getArguments();
-        Integer index = Math.round((Float)args[0]);
+        Integer index = (Integer)  args[0];//;Math.round((Float)args[0]);
         //master = true;
         try {
          index(index);
@@ -649,10 +649,28 @@ void startTimer () {
 
 void advance(){
   advance(true);
+         try {
+        Object args[] = new Object[1];
+        args[0] = order.getIndex();
+        OSCMessage msg = new OSCMessage( "/index", args);
+        //sender.send(msg); 
+        broadcast( msg);
+        master = true;
+       } catch (Exception e) { }     
+
 }
 
 void prev(){
   advance(false);
+         try {
+        Object args[] = new Object[1];
+        args[0] = order.getIndex();
+        OSCMessage msg = new OSCMessage( "/index", args);
+        //sender.send(msg); 
+        broadcast( msg);
+        master = true;
+       } catch (Exception e) { }     
+
 }
 
 void advance (boolean forward) {
@@ -737,6 +755,23 @@ void advanceq(boolean forward){
   double piece_time = getTime(speed);
   piece_time = times.advance(piece_time, forward);
   setTime(piece_time); // no fix this
+  
+  String tag;
+  if(master) {
+    if (forward){
+      tag = "/nextq";
+    } else {
+      tag = "/prevq";
+    };
+         try {
+        Object args[] = new Object[1];
+        args[0] = order.getIndex();
+        OSCMessage msg = new OSCMessage( tag);
+        //sender.send(msg); 
+        broadcast( msg);
+        master = true;
+       } catch (Exception e) { }     
+  }
 }
   
   

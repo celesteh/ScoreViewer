@@ -7,18 +7,20 @@ import javax.swing.JFrame;
 import java.net.*;
 import java.util.Iterator;
 import java.io.File;
-import java.util.List;
-import http.*;
+import java.util.*;
+//import http.*;
 
-SimpleHTTPServer server;
+//SimpleHTTPServer server;
 // web support forthcoming
 
 // kill all clickability
 int port = 1200;
 
  //byte [] b = {(byte)192, (byte)168, (byte)2, (byte)10};
- InetAddress addy;
- OSCPortOut sender;
+ 
+ //OSCPortOut sender;
+ List <OSCPortOut> known;
+ OSCPortOut helper;
 
 PFont fontA;
 
@@ -78,19 +80,55 @@ void setup() {
 
   try{
 
-    addy = InetAddress.getByName("255.255.255.255");
+    InetAddress broadcast = InetAddress.getByName("255.255.255.255");
+    known = new ArrayList<OSCPortOut>();
+    InetAddress idEcho = InetAddress.getByName("10.42.0.1");
+    helper = new OSCPortOut(idEcho, 57120);
     
     OSCPortIn receiver = new OSCPortIn(port);
-    sender = new OSCPortOut(addy, port);
+    OSCPortOut sender = new OSCPortOut(broadcast, port);
+    
+    known.add(sender);
+    
+    // manage known identities
+     OSCListener listener = new OSCListener() {
+     public void acceptMessage  (java.util.Date time, OSCMessage message) {
+        System.out.println("ID Message received!");
+        try{
+          // get the data from the message
+          Object[] args = message.getArguments();
+          String remoteIP = (String) args[0];
+          int remotePort = (int)Math.round((Float)args[1]);
+          boolean found = false;
+          OSCPortOut item;
+          // See if the peer is already known
+          ListIterator<OSCPortOut> itr=known.listIterator();    
+          while(itr.hasNext() && (!found)){    
+            item = itr.next();
+            if(item.toString().equals(remoteIP)){
+              found = true;
+            };
+          };
+          if(! found) { // add them if not
+            InetAddress newPeer = InetAddress.getByName(remoteIP);
+            known.add(new OSCPortOut(newPeer, remotePort));
+          }
+          
+        } catch (Exception e) {};
+     };
+    };  
+    receiver.addListener("/ip", listener);
+    
     
     // control from remote phone or device
-        OSCListener listener = new OSCListener() {
+    listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Start Message received!");
         master = true;
         try{ 
           OSCMessage msg = new OSCMessage( "/start");
-          sender.send(msg);
+          //sender.send(msg);
+          broadcast( msg);
         } catch (Exception e) {};
         
         startTimer();
@@ -106,7 +144,8 @@ void setup() {
          running = false;
          //master = false;
          OSCMessage msg = new OSCMessage( "/stop");
-         sender.send(msg);
+         //sender.send(msg);
+         broadcast( msg);
         } catch (Exception e){};
       };
      };
@@ -120,7 +159,8 @@ void setup() {
          advance();        
          //try{ 
           OSCMessage msg = new OSCMessage( "/next");
-          sender.send(msg);
+          //sender.send(msg);
+          broadcast( msg);
         //} catch (Exception e) {};
 
         } catch (Exception e){};
@@ -136,7 +176,8 @@ void setup() {
          nextq();        
          //try{ 
           OSCMessage msg = new OSCMessage( "/nextq");
-          sender.send(msg);
+          //sender.send(msg);
+          broadcast( msg);
         //} catch (Exception e) {};
 
         } catch (Exception e){};
@@ -152,8 +193,8 @@ void setup() {
         try {
          prev();
           OSCMessage msg = new OSCMessage( "/prev");
-          sender.send(msg);
-
+          //sender.send(msg);
+          broadcast( msg);
         } catch (Exception e){};
       };
      };
@@ -166,8 +207,8 @@ void setup() {
         try {
          prevq();
           OSCMessage msg = new OSCMessage( "/prevq");
-          sender.send(msg);
-
+          //sender.send(msg);
+          broadcast( msg);
         } catch (Exception e){};
       };
      };
@@ -184,8 +225,8 @@ void setup() {
         try {
          index(index);
           OSCMessage msg = new OSCMessage( "/index", args);
-          sender.send(msg);
-
+          //sender.send(msg);
+          broadcast( msg);
         } catch (Exception e){};
       };
      };
@@ -378,9 +419,12 @@ void draw() {
   if (millis() - last_ping > 3000) { //every 3 seconds
     last_ping = millis();
          try{
-           OSCMessage msg = new OSCMessage( "/alive"); //the hope is that this keeps my wifi from sleeping
+           Object args[] = new Object[1];
+           args[0] = port;//the_time;
+           OSCMessage msg = new OSCMessage( "/ip", args); //the hope is that this keeps my wifi from sleeping
            //System.out.println("alive");
-            sender.send(msg);
+            //sender.send(msg);
+            helper.send(msg);
           } catch (Exception e) {}  
   }
 
@@ -427,7 +471,8 @@ void draw() {
            Object args[] = new Object[1];
            args[0] = disp_time;//the_time;
            OSCMessage msg = new OSCMessage( "/time", args);
-            sender.send(msg);
+            //sender.send(msg);
+            broadcast( msg);
             System.out.println("/time " + disp_time);
           } catch (Exception e) {}
        }
@@ -561,13 +606,25 @@ void draw() {
 
 }
 
+void broadcast(OSCMessage msg){
+  try{
+      ListIterator<OSCPortOut> itr=known.listIterator();    
+      while(itr.hasNext()){    
+        itr.next().send(msg);
+      }
+
+  } catch (Exception e) {};
+
+}
+
 
 void startTimer () {
   
   if (master) {
     try {
       OSCMessage msg = new OSCMessage( "/start");
-      sender.send(msg);
+      //sender.send(msg);
+      broadcast( msg);
       println("sent");
     } catch (Exception e){};
   }
@@ -616,7 +673,8 @@ void advance (boolean forward) {
         Object args[] = new Object[1];
         args[0] = times.id;
         OSCMessage msg = new OSCMessage( "/id", args);
-        sender.send(msg); 
+        //sender.send(msg); 
+        broadcast( msg);
         master = true;
        } catch (Exception e) { }     
       
@@ -645,7 +703,8 @@ void index(Integer index){
         Object args[] = new Object[1];
         args[0] = times.id;
         OSCMessage msg = new OSCMessage( "/id", args);
-        sender.send(msg); 
+        //sender.send(msg);
+        broadcast( msg);
         master = true;
        } catch (Exception e) { }     
       

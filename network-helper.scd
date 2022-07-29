@@ -1,6 +1,6 @@
 (
 
-var addrs = Dictionary;
+var addrs = Dictionary.new;
 
 
 n = NetAddr("127.0.0.1", NetAddr.langPort); // local machine

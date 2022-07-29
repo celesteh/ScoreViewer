@@ -1,5 +1,5 @@
 import processing.net.*;
-import processing.sound.*;
+//import processing.sound.*;
 //import processing.video.*;
 //import processing.oscP5.*;
 import javax.swing.JOptionPane;
@@ -93,7 +93,7 @@ void setup() {
     // manage known identities
      OSCListener listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
-        System.out.println("ID Message received!");
+        //System.out.println("ID Message received!");
         try{
           // get the data from the message
           Object[] args = message.getArguments();
@@ -121,7 +121,7 @@ void setup() {
     
     
     // control from remote phone or device
-    listener = new OSCListener() {
+     listener = new OSCListener() {
      public void acceptMessage  (java.util.Date time, OSCMessage message) {
         System.out.println("Start Message received!");
         master = true;
@@ -240,7 +240,7 @@ void setup() {
         System.out.println("Index message received!");
         Object[] args = message.getArguments();
         Integer index = Math.round((Float)args[0]);
-        master = true;
+        //master = true;
         try {
          index(index);
         } catch (Exception e){};
@@ -343,7 +343,7 @@ void setup() {
             order = null;
           }
           
-          id = "Timings/" + (((String) message.getArguments()[0])) + ".xml";
+          id = (((String) message.getArguments()[0])) + ".xml";
           System.out.println("id Message received! " + id);
 
           times = new TimingReader(id);
@@ -673,6 +673,14 @@ void advance (boolean forward) {
         Object args[] = new Object[1];
         args[0] = times.id;
         OSCMessage msg = new OSCMessage( "/id", args);
+        //sender.send(msg); 
+        broadcast( msg);
+        master = true;
+       } catch (Exception e) { }     
+       try {
+        Object args[] = new Object[1];
+        args[0] = order.getIndex();
+        OSCMessage msg = new OSCMessage( "/index", args);
         //sender.send(msg); 
         broadcast( msg);
         master = true;

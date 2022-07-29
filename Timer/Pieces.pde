@@ -167,6 +167,8 @@ public class Pieces implements Iterator {
     frame.close();
   }
   
-  
+  public int getIndex(){
+    return (index - 1);
+  }
 
 }

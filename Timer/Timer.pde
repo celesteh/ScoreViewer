@@ -649,28 +649,29 @@ void startTimer () {
 
 void advance(){
   advance(true);
+  if(master){
          try {
         Object args[] = new Object[1];
         args[0] = order.getIndex();
         OSCMessage msg = new OSCMessage( "/index", args);
         //sender.send(msg); 
         broadcast( msg);
-        master = true;
        } catch (Exception e) { }     
-
+  }
 }
 
 void prev(){
   advance(false);
+    if(master){
+
          try {
         Object args[] = new Object[1];
         args[0] = order.getIndex();
         OSCMessage msg = new OSCMessage( "/index", args);
         //sender.send(msg); 
         broadcast( msg);
-        master = true;
        } catch (Exception e) { }     
-
+    }
 }
 
 void advance (boolean forward) {

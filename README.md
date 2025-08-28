@@ -1,3 +1,5 @@
+Moved to codeberg: https://codeberg.org/celesteh/ScoreViewer
+
 ScoreViewer
 ===========
 
